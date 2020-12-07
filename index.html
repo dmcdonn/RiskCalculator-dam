@@ -1,0 +1,145 @@
+<DOCTYPE html>
+<html lange="en">
+
+
+<!--
+    Author: Delaney McDonnell
+    Class: Introduction to Computer Science
+    Project Name: Health Insurance Risk Calculator
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Health Insurance Risk Calculator</title>
+    <link rel="stylesheet" href="Health_Insurance_Risk_Calculator-CSS.css"
+</head>
+
+<body>
+    <h1>Health Insurance Risk Calculator</h1>
+    <p>Hello! Welcome to the Health Insurance Risk Calculator where we test the risk of clients based on a series of characteristics!
+    Here we will use the health infromation provided by the potential customer to determine the risk of accepting them with 
+    our insurance group. Our system will ask questions involving the customers body-mass index, blood pressure, age, and family
+    history of disease to establish a risk rating. Each answer given has a number of points and the calculator will use those points
+    to determine the total score and the risk category. Please answer all the questions as honestly and truthfuly as possible in order
+    to get an accurate score. Thank you and Good Luck!
+    <br /><br />
+    Risk Category Based on Total Score:<br />
+     Less than 20 = Low risk<br />
+     Between 20 and 50 = Moderate risk<br />
+     Between 50 and 75 = High risk<br />
+     Above 75 = Uninsurable
+     <br /><br />
+     To calculate your Body Mass Index(BMI) use the following formula:<br />
+     BMI=(your weight(lbs) / [your height(in)]^2)*703</p>
+
+
+
+    <label>What is your Age?</label><br />
+    <select id="q1">
+        <option value="0">less than 30 years</option>
+        <option value="10">between 30 years and 45 years</option>
+        <option value="20">between 45 years and 60 years</option>
+        <option value="30">older than 60 years</option>
+    </select>
+    <br /><br />
+
+    <label>What is your Body Mass Index(BMI)</label><br />
+    <select id="q2">
+        <option value="0">normal, between 18.5 and 24.9</option>
+        <option value="30">overweight, between 25.0 and 29.9</option>
+        <option value="75">obesity, between 30.0 and 34.9</option>
+    </select>
+    <br /><br />
+
+    <label>What is your Blood Pressure?</label><br />
+    <select id="q3">
+        <option value="0">normal</option>
+        <option value="15">elevated</option>
+        <option value="30">stage 1</option>
+        <option value="75">stage 2</option>
+        <option value="100">crisis</option>
+    </select>
+    <br /><br />
+
+    <label>Do you have a history of family disease?</label><br />
+    <select id="q4">
+        <option value="10">Yes, diabetes</option>
+        <option value="10">Yes, cancer</option>
+        <option value="10">Yes, Alzheimer's</option>
+        <option value="0">No, I do not have a history of family disease</option>
+    </select>
+    <br /><br />
+
+
+    <button onclick="calculateRiskScore()">Calculate Total Risk Score</button>
+    <p id="RiskScore"></p>
+
+
+
+
+<script>
+console.log("Starting Risk Calculator...");
+
+
+function calculateRiskScore() {
+    console.log("calculateRiskScore()");
+
+    const DESIRED_RESPONSE = [
+        0, /* less than 30 years */
+        0, /* normal */
+        0, /* normal */
+        0, /* No, I do not have a history of family disease */
+        ]
+
+    const MAX_SCORE = 215;
+
+
+    let question1Response = document.getElementById("q1").selectedOptions[0].value;
+    let question2Response = document.getElementById("q2").selectedOptions[0].value;
+    let question3Response = document.getElementById("q3").selectedOptions[0].value;
+    let question4Response = document.getElementById("q4").selectedOptions[0].value;
+
+    console.log("Question 1 Answers:");
+    console.log(document.getElementById("q1").selectedOptions[0].value);
+    console.log(question1Response);
+
+    console.log("Question 2 Answers:");
+    console.log(document.getElementById("q2").selectedOptions[0].value);
+    console.log(question2Response);
+
+    console.log("Question 3 Answers:");
+    console.log(document.getElementById("q3").selectedOptions[0].value);
+    console.log(question3Response);
+
+    console.log("Question 4 Answers:");
+    console.log(document.getElementById("q4").selectedOptions[0].value);
+    console.log(question4Response);
+    
+    
+    let question1RiskScore = Math.abs(question1Response - DESIRED_RESPONSE[0]);
+    let question2RiskScore = Math.abs(question2Response - DESIRED_RESPONSE[1]);
+    let question3RiskScore = Math.abs(question3Response - DESIRED_RESPONSE[2]);
+    let question4RiskScore = Math.abs(question4Response - DESIRED_RESPONSE[3]);
+    
+
+    console.log(question1RiskScore);
+    console.log(question2RiskScore);
+    console.log(question3RiskScore);
+    console.log(question4RiskScore);
+
+    let totalRiskScore = question1RiskScore + question2RiskScore + question3RiskScore + question4RiskScore;
+
+    totalRiskScore *= 100 / MAX_SCORE;
+    totalRiskScore = Math.round(totalRiskScore);
+    console.log("totalRiskScore="+ totalRiskScore);
+    
+
+    letUserResponse="Your risk score for question 1 was: "+question1Response+"/"+question2Response+"/"+question3Response+"/"+question4Response+"/";
+
+
+    document.getElementById("RiskScore").innerHTML = "Your Risk Score is: "+totalRiskScore;
+}
+</script>
+
+</body>
+</html>
